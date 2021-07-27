@@ -23,10 +23,9 @@ export default function Invoice() {
 
     const handleRadioChange = async (e) => {
         setMetode(e.target.value);
-        const data = axios.put(`http://localhost/smart_school/api/data/spp/transaksi_konfirmasi/kode/${kode}/metode/${e.target.value}`).then(
+        const data = await axios.put(`http://localhost/smart_school/api/data/spp/transaksi_konfirmasi/kode/${kode}/metode/${e.target.value}`).then(
             (res) => res.data.data
         );
-        console.log(data);
     };
 
     return (
@@ -53,6 +52,7 @@ export default function Invoice() {
                             <div className="flex border-t border-b mb-6 border-gray-200 py-2">
                             </div>
                             <div className="flex">
+                                <p>{invoice.kode_midtrans}</p>
                                 <span className="title-font font-medium text-2xl text-gray-900">Rp. {invoice.nominal},00</span>
                                 <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded" onClick={() => setShowModal(true)}>Metode Pembayaran</button>
                                 <a href="#" className="mx-7 text-green-500 inline-flex items-center"> Bayar
@@ -115,13 +115,6 @@ export default function Invoice() {
                                         </table>
                                     </div>
                                     <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                                        <button
-                                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={() => setShowModal(false)}
-                                        >
-                                            Tutup
-                                        </button>
                                         <button
                                             className="text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="button"
