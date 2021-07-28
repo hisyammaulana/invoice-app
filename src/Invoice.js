@@ -26,6 +26,7 @@ export default function Invoice() {
         const data = await axios.put(`http://localhost/smart_school/api/data/spp/transaksi_konfirmasi/kode/${kode}/metode/${e.target.value}`).then(
             (res) => res.data.data
         );
+        getInvoice();
     };
 
     return (
@@ -52,10 +53,9 @@ export default function Invoice() {
                             <div className="flex border-t border-b mb-6 border-gray-200 py-2">
                             </div>
                             <div className="flex">
-                                <p>{invoice.kode_midtrans}</p>
                                 <span className="title-font font-medium text-2xl text-gray-900">Rp. {invoice.nominal},00</span>
                                 <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded" onClick={() => setShowModal(true)}>Metode Pembayaran</button>
-                                <a href="#" className="mx-7 text-green-500 inline-flex items-center"> Bayar
+                                <a href={`https://app.sandbox.midtrans.com/snap/v2/vtweb/${invoice.token_vtweb}`} className="mx-7 text-green-500 inline-flex items-center"> Bayar
                                     <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                                         <path d="M5 12h14M12 5l7 7-7 7"></path>
                                     </svg>
@@ -91,12 +91,6 @@ export default function Invoice() {
                                                     <td className="px-4 py-3 text-lg text-gray-900">Gopay</td>
                                                     <td className="w-10 text-center">
                                                         <input name="gopay" type="radio" value="gopay" onChange={handleRadioChange} checked={metode === 'gopay'} />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="border-t-2 border-gray-200 px-4 py-3 text-lg text-gray-900">Linkaja</td>
-                                                    <td className="border-t-2 border-gray-200 w-10 text-center">
-                                                        <input name="linkaja" type="radio" value="linkaja" onChange={handleRadioChange} checked={metode === 'linkaja'} />
                                                     </td>
                                                 </tr>
                                                 <tr>
