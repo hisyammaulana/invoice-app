@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from './Api';
 
 export default function Invoice() {
     const [invoice, setInvoice] = useState({});
     const [tagihan, setTagihan] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [metode, setMetode] = useState("");
     const { kode } = useParams();
 
     const getInvoice = async () => {
-        const data = await axios(`http://localhost/smart_school/api/data/spp/transaksi_konfirmasi/kode/${kode}/tagihan`).then(
+        const data = await axios(`${BASE_URL}/api/data/spp/transaksi_konfirmasi/kode/${kode}/tagihan`).then(
             (res) => res.data.data
         )
         setInvoice(data);
@@ -22,8 +22,7 @@ export default function Invoice() {
     }, [])
 
     const handleRadioChange = async (e) => {
-        setMetode(e.target.value);
-        const data = await axios.put(`http://localhost/smart_school/api/data/spp/transaksi_konfirmasi/kode/${kode}/metode/${e.target.value}`).then(
+        const data = await axios.put(`${BASE_URL}/api/data/spp/transaksi_konfirmasi/kode/${kode}/metode/${e.target.value}`).then(
             (res) => res.data.data
         );
         setShowModal(false);
