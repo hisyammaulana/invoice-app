@@ -26,6 +26,7 @@ export default function Invoice() {
         const data = await axios.put(`http://localhost/smart_school/api/data/spp/transaksi_konfirmasi/kode/${kode}/metode/${e.target.value}`).then(
             (res) => res.data.data
         );
+        setShowModal(false);
         getInvoice();
     };
 
@@ -55,11 +56,13 @@ export default function Invoice() {
                             <div className="flex">
                                 <span className="title-font font-medium text-2xl text-gray-900">Rp. {invoice.nominal},00</span>
                                 <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded" onClick={() => setShowModal(true)}>Metode Pembayaran</button>
-                                <a href={`https://app.sandbox.midtrans.com/snap/v2/vtweb/${invoice.token_vtweb}`} className="mx-7 text-green-500 inline-flex items-center"> Bayar
-                                    <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                                        <path d="M5 12h14M12 5l7 7-7 7"></path>
-                                    </svg>
-                                </a>
+                                {
+                                    invoice.token_vtweb == null ? null : <a href={`https://app.sandbox.midtrans.com/snap/v2/vtweb/${invoice.token_vtweb}`} className="mx-7 text-green-500 inline-flex items-center"> Bayar
+                                        <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                                        </svg>
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -90,32 +93,32 @@ export default function Invoice() {
                                                 <tr>
                                                     <td className="px-4 py-3 text-lg text-gray-900">Gopay</td>
                                                     <td className="w-10 text-center">
-                                                        <input name="gopay" type="radio" value="gopay" onChange={handleRadioChange} checked={metode === 'gopay'} />
+                                                        <input name="gopay" type="radio" value="gopay" onChange={handleRadioChange} checked={invoice.bentuk === "gopay"} />
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td className="border-t-2 border-gray-200 px-4 py-3 text-lg text-gray-900">Shopee Pay</td>
                                                     <td className="border-t-2 border-gray-200 w-10 text-center">
-                                                        <input name="shopee_pay" type="radio" value="shopee_pay" onChange={handleRadioChange} checked={metode === 'shopee_pay'} />
+                                                        <input name="shopee_pay" type="radio" value="shopee_pay" onChange={handleRadioChange} checked={invoice.bentuk === "shopee_pay"} />
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td className="border-t-2 border-b-2 border-gray-200 px-4 py-3 text-lg text-gray-900">Transfer Bank (Biaya Admin 4500/Transaksi)</td>
                                                     <td className="border-t-2 border-b-2 border-gray-200 w-10 text-center">
-                                                        <input name="transfer_bank" type="radio" value="transfer_bank" onChange={handleRadioChange} checked={metode === 'transfer_bank'} />
+                                                        <input name="transfer_bank" type="radio" value="transfer_bank" onChange={handleRadioChange} checked={invoice.bentuk === "transfer_bank"} />
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                     <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                                        <button
+                                        {/* <button
                                             className="text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="button"
                                             onClick={() => setShowModal(false)}
                                         >
                                             Simpan
-                                        </button>
+                                        </button> */}
                                     </div>
                                 </div>
                             </div>
