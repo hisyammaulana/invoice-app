@@ -25,8 +25,8 @@ export default function Invoice() {
         const data = await axios.put(`${BASE_URL}/api/data/spp/transaksi_konfirmasi/kode/${kode}/metode/${e.target.value}`).then(
             (res) => res.data.data
         );
-        setShowModal(false);
         getInvoice();
+        setShowModal(false);
     };
 
     return (
