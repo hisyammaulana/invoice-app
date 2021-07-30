@@ -59,7 +59,10 @@ export default function Invoice() {
                             <div className="flex border-t border-b mb-6 border-gray-200 py-2">
                             </div>
                             <div className="flex">
-                                <span className="title-font font-medium text-2xl text-gray-900">Rp. {invoice.nominal},00</span>
+                                {
+                                    status != 200 ? <span className="title-font font-medium text-2xl text-gray-900">Rp. {invoice.nominal},00</span> : <span className="title-font font-medium text-2xl text-gray-900 ml-auto">Rp. {invoice.nominal},00</span>
+                                }
+
                                 {
                                     status != 200 ? <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded" onClick={() => setShowModal(true)}>Metode Pembayaran</button> : null
                                 }
