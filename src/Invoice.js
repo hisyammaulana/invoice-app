@@ -6,6 +6,7 @@ import { BASE_URL } from './Api';
 export default function Invoice() {
     const [invoice, setInvoice] = useState({});
     const [tagihan, setTagihan] = useState([]);
+    const [status, setStatus] = useState("");
     const [showModal, setShowModal] = useState(false);
     const { kode } = useParams();
 
@@ -13,8 +14,13 @@ export default function Invoice() {
         const data = await axios(`${BASE_URL}/api/data/spp/transaksi_konfirmasi/kode/${kode}/tagihan`).then(
             (res) => res.data.data
         )
+
+        const status = await axios(`${BASE_URL}/api/data/spp/tagihan/order/${data.kode_midtrans}/status`).then(
+            (res) => res.data.midtrans.status_code
+        )
         setInvoice(data);
         setTagihan(data.tagihan);
+        setStatus(status);
     }
 
     useEffect(() => {
@@ -54,13 +60,16 @@ export default function Invoice() {
                             </div>
                             <div className="flex">
                                 <span className="title-font font-medium text-2xl text-gray-900">Rp. {invoice.nominal},00</span>
-                                <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded" onClick={() => setShowModal(true)}>Metode Pembayaran</button>
                                 {
-                                    invoice.token_vtweb == null ? null : <a href={`https://app.sandbox.midtrans.com/snap/v2/vtweb/${invoice.token_vtweb}`} className="mx-7 text-green-500 inline-flex items-center"> Bayar
+                                    status != 200 ? <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded" onClick={() => setShowModal(true)}>Metode Pembayaran</button> : null
+                                }
+
+                                {
+                                    invoice.token_vtweb == null ? null : (status != 200 ? <a href={`https://app.sandbox.midtrans.com/snap/v2/vtweb/${invoice.token_vtweb}`} className="mx-7 text-green-500 inline-flex items-center"> Bayar
                                         <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                                             <path d="M5 12h14M12 5l7 7-7 7"></path>
                                         </svg>
-                                    </a>
+                                    </a> : null)
                                 }
                             </div>
                         </div>
@@ -111,13 +120,6 @@ export default function Invoice() {
                                         </table>
                                     </div>
                                     <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                                        {/* <button
-                                            className="text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                            onClick={() => setShowModal(false)}
-                                        >
-                                            Simpan
-                                        </button> */}
                                     </div>
                                 </div>
                             </div>
