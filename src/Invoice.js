@@ -57,14 +57,14 @@ export default function Invoice() {
                             })
                             }
                             <div className="flex border-t border-b mb-6 border-gray-200 py-2">
+                            <span className="title-font font-medium text-2xl text-gray-900">Total</span> <span className="title-font font-medium text-2xl text-gray-900 ml-auto">Rp. {invoice.nominal},00</span>
                             </div>
                             <div className="flex">
                                 {
-                                    status != 200 ? <span className="title-font font-medium text-2xl text-gray-900">Rp. {invoice.nominal},00</span> : <span className="title-font font-medium text-2xl text-gray-900 ml-auto">Rp. {invoice.nominal},00</span>
-                                }
-
-                                {
-                                    status != 200 ? <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded" onClick={() => setShowModal(true)}>Metode Pembayaran</button> : null
+                                    status != 200 ? <div className="flex m-auto">
+                                        <a className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded mx-3" href={`/tagihan/${kode}/konfirmasi`}>Transfer Manual</a>
+                                        <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded mx-2" onClick={() => setShowModal(true)}>Metode Pembayaran</button>
+                                    </div> : null
                                 }
 
                                 {
@@ -93,33 +93,35 @@ export default function Invoice() {
                                             className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                             onClick={() => setShowModal(false)}
                                         >
-                                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                                ×
+                                            <span className="text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                                X
                                             </span>
                                         </button>
                                     </div>
                                     <div className="w-full mx-auto overflow-auto">
                                         <table className="table-auto w-full text-left whitespace-no-wrap">
-                                            <tbody>
-                                                <tr>
-                                                    <td className="px-4 py-3 text-lg text-gray-900">Gopay</td>
-                                                    <td className="w-10 text-center">
-                                                        <input name="gopay" type="radio" value="gopay" onChange={handleRadioChange} checked={invoice.bentuk === "gopay"} />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="border-t-2 border-gray-200 px-4 py-3 text-lg text-gray-900">Shopee Pay</td>
-                                                    <td className="border-t-2 border-gray-200 w-10 text-center">
-                                                        <input name="shopee_pay" type="radio" value="shopee_pay" onChange={handleRadioChange} checked={invoice.bentuk === "shopee_pay"} />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="border-t-2 border-b-2 border-gray-200 px-4 py-3 text-lg text-gray-900">Transfer Bank (Biaya Admin 4500/Transaksi)</td>
-                                                    <td className="border-t-2 border-b-2 border-gray-200 w-10 text-center">
-                                                        <input name="transfer_bank" type="radio" value="transfer_bank" onChange={handleRadioChange} checked={invoice.bentuk === "transfer_bank"} />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                            <div className="shadow-md">
+                                                <tbody>
+                                                    <tr className="tab w-full overflow-hidden border-t">
+                                                        <td className="px-4 py-3 text-lg text-gray-900">Gopay</td>
+                                                        <td className="w-10 text-center">
+                                                            <input name="gopay" type="radio" value="gopay" onChange={handleRadioChange} checked={invoice.bentuk === "gopay"} />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="border-t-2 border-gray-200 px-4 py-3 text-lg text-gray-900">Shopee Pay</td>
+                                                        <td className="border-t-2 border-gray-200 w-10 text-center">
+                                                            <input name="shopee_pay" type="radio" value="shopee_pay" onChange={handleRadioChange} checked={invoice.bentuk === "shopee_pay"} />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="border-t-2 border-b-2 border-gray-200 px-4 py-3 text-lg text-gray-900">Transfer Bank (Biaya Admin 4500/Transaksi)</td>
+                                                        <td className="border-t-2 border-b-2 border-gray-200 w-10 text-center">
+                                                            <input name="transfer_bank" type="radio" value="transfer_bank" onChange={handleRadioChange} checked={invoice.bentuk === "transfer_bank"} />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </div>
                                         </table>
                                     </div>
                                     <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
