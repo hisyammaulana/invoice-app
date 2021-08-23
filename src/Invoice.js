@@ -18,6 +18,7 @@ export default function Invoice() {
         const status = await axios(`${BASE_URL}/api/data/spp/tagihan/order/${data.kode_midtrans}/status`).then(
             (res) => res.data.midtrans.status_code
         )
+        console.log(data);
         setInvoice(data);
         setTagihan(data.tagihan);
         setStatus(status);
@@ -57,12 +58,14 @@ export default function Invoice() {
                             })
                             }
                             <div className="flex border-t border-b mb-6 border-gray-200 py-2">
-                            <span className="title-font font-medium text-2xl text-gray-900">Total</span> <span className="title-font font-medium text-2xl text-gray-900 ml-auto">Rp. {invoice.nominal},00</span>
+                                <span className="title-font font-medium text-2xl text-gray-900">Total</span> <span className="title-font font-medium text-2xl text-gray-900 ml-auto">Rp. {invoice.nominal},00</span>
                             </div>
                             <div className="flex">
                                 {
-                                    status != 200 ? <div className="flex m-auto">
-                                        <a className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded mx-3" href={`/tagihan/${kode}/konfirmasi`}>Transfer Manual</a>
+                                    status != 200 && invoice.file == null ? <div className="flex m-auto">
+                                        {
+                                            invoice.bentuk != null ? null : <a className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded mx-3" href={`/tagihan/${kode}/konfirmasi`}>Transfer Manual</a>
+                                        }
                                         <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded mx-2" onClick={() => setShowModal(true)}>Metode Pembayaran</button>
                                     </div> : null
                                 }
