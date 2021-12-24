@@ -120,7 +120,7 @@ export default function Invoice() {
                                                     <tr>
                                                         <td className="border-t-2 border-b-2 border-gray-200 px-4 py-3 text-lg text-gray-900">Transfer Bank (Biaya Admin 4500/Transaksi)</td>
                                                         <td className="border-t-2 border-b-2 border-gray-200 w-10 text-center">
-                                                            <input name="transfer_bank" type="radio" value="transfer_bank" onChange={handleRadioChange} checked={invoice.bentuk === "transfer_bank"} />
+                                                            <input name="virtual_account" type="radio" value="virtual_account" onChange={handleRadioChange} checked={invoice.bentuk === "virtual_account"} />
                                                         </td>
                                                     </tr>
                                                 </tbody>
