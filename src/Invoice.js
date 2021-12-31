@@ -9,14 +9,19 @@ export default function Invoice() {
     const [status, setStatus] = useState("");
     const [showModal, setShowModal] = useState(false);
     const { kode } = useParams();
+    const sekolah = window.location.hostname;
 
     const getInvoice = async () => {
+        const id = await axios(`${BASE_URL}/api/data/master/sekolah/search/by/domain/sekolah/${sekolah}`).then(
+            (res) => res.data.data.id
+        )
+
         const data = await axios(`${BASE_URL}/api/data/spp/transaksi_konfirmasi/kode/${kode}/tagihan`).then(
             (res) => res.data.data
         )
 
-        const status = await axios(`${BASE_URL}/api/data/spp/tagihan/order/${data.kode_midtrans}/status`).then(
-            (res) => res.data.midtrans.status_code
+        const status = await axios(`${BASE_URL}/api/data/spp/tagihan/order/${data.kode_midtrans}/status/sekolah/${id}`).then(
+            (res) => res.data.midtrans
         )
         console.log(data);
         setInvoice(data);
